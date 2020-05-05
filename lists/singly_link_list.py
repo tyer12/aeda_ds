@@ -176,4 +176,14 @@ class SinglyLinkedList:
 
     # Returns an iterator of the elements in the list (in proper sequence).
     def iterator(self):
-        SinglyLinkedListIterator(self.head)
+        iterator = SinglyLinkedListIterator(self.head)
+        result = ''
+        verify = True
+
+        while True:
+            result += str(iterator.next()) + ''
+            if verify == False:
+                break
+            if not iterator.has_next():
+                verify = False
+        return result
