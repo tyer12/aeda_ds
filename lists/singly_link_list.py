@@ -1,6 +1,6 @@
-from nodes import SingleListNode
-from singly_linked_list_iterator import SinglyLinkedListIterator
-import exceptions
+from aed_ds.lists.nodes import SingleListNode
+from aed_ds.lists.singly_linked_list_iterator import SinglyLinkedListIterator
+from aed_ds.exceptions import EmptyListException, NoSuchElementException, InvalidPositionException
 
 class SinglyLinkedList:
     def __init__(self):
@@ -105,6 +105,8 @@ class SinglyLinkedList:
                     current = current.get_next()
                     index += 1
 
+                self.num_elements += 1
+
     # Removes and returns the element at the first position in the list.
     # Throws EmptyListException.
     def remove_first(self):
@@ -141,49 +143,43 @@ class SinglyLinkedList:
                     break
                 var = cur
                 cur = cur.get_next()
-            
+
             self.tail = var
             self.tail.set_next(None)
             self.num_elements -= 1
             return self.tail.get_element()
-    
+
     # Removes and returns the element at the specified position in the list.
     # Range of valid positions: 0, ..., size()-1.
     # Throws InvalidPositionException.
     def remove(self, position):
-        if position == 0:
-            self.remove_first()
-        elif position == self.size()-1:
-            self.remove_last()
+        if position < 0 and position >= self.size():
+            raise InvalidPositionException()
         else:
-            current = self.head
-            index = 0
-            while True:
-                if index == position - 1:
-                    temp = current.get_next()
-                    current.set_next(temp.get_next())
-                    return temp.get_element()
+            if position == 0:
+                self.remove_first()
+            elif position == self.size()-1:
+                self.remove_last()
+            else:
+                current = self.head
+                index = 0
+                while True:
+                    if index == position - 1:
+                        temp = current.get_next()
+                        current.set_next(temp.get_next())
+                        self.num_elements -= 1
+                        return temp.get_element()
 
-                current = current.get_next()
-                index += 1
+                    current = current.get_next()
+                    index += 1
 
     # Removes all elements from the list.
     def make_empty(self):
         self.head = None
         self.tail = None
         self.num_elements = 0
-        
+
 
     # Returns an iterator of the elements in the list (in proper sequence).
     def iterator(self):
-        iterator = SinglyLinkedListIterator(self.head)
-        result = ''
-        verify = True
-
-        while True:
-            result += str(iterator.next()) + ''
-            if verify == False:
-                break
-            if not iterator.has_next():
-                verify = False
-        return result
+        return SinglyLinkedListIterator(self.head)
