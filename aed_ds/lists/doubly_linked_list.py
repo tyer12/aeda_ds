@@ -1,42 +1,32 @@
-from aed_ds.lists.singly_linked_list import SinglyLinkedList
-from aed_ds.lists.nodes import DoubleListNode
-from aed_ds.exceptions import EmptyListException, NoSuchElementException, InvalidPositionException
+from .singly_linked_list import SinglyLinkedList
+from .nodes import DoubleListNode
+from .doubly_linked_list_iterator import DoublyLinkedListIterator
+from ..exceptions import EmptyListException, NoSuchElementException, InvalidPositionException
 
-class DoubleLinkedList(SinglyLinkedList):
+class DoublyLinkedList(SinglyLinkedList):
     def __init__(self):
         SinglyLinkedList.__init__(self)
-        self.previous = None
-
-    def get_previous(self):
-        return self.previous
-
-    def set_previous(self, previous):
-        self.previous = previous
 
     def insert_first(self, element):
-        node = DoubleListNode(element, self.head, None)
-        self.head = node
-        self.num_elements += 1
+        self.head = DoubleListNode(element, self.head, None)
         if self.tail is None:
-            node_tail = DoubleListNode(element, None, self.head)
-            self.tail = node_tail
+            self.tail = self.head
+        self.num_elements += 1
 
     def insert_last(self, element):
         if self.num_elements == 0:
-            node = DoubleListNode(element, None, self.head)
-            self.tail = node
-            node_head = DoubleListNode(element, self.tail, None)
-            self.head = node_head
+            self.head = DoubleListNode(element, None, None)
+            self.tail = self.head
             self.num_elements += 1
         else:
             previous = self.tail
             node = DoubleListNode(element, None, previous)
             self.tail = node
-            self.num_elements += 1
             previous.set_next(self.tail) 
+            self.num_elements += 1
 
     def insert(self, element, position):
-        if position > self.num_elements or position < self.num_elements:
+        if position < 0 or position > self.size():
             raise InvalidPositionException()
         else: 
             if position == 0:
@@ -65,7 +55,7 @@ class DoubleLinkedList(SinglyLinkedList):
             self.num_elements = 0
             return None
         elif self.num_elements == 0:
-            return EmptyListException()
+            raise EmptyListException()
         else:
             temp = self.head
             temp = self.head.get_next()
@@ -90,7 +80,7 @@ class DoubleLinkedList(SinglyLinkedList):
             return self.tail.get_element()
 
     def remove(self, position):
-        if position < 0 and position >= self.size():
+        if position < 0 or position >= self.size():
             raise InvalidPositionException()
         else:
             if position == 0:
@@ -111,3 +101,7 @@ class DoubleLinkedList(SinglyLinkedList):
 
                     current = current.get_next()
                     index += 1
+
+    def iterator(self):
+        return DoublyLinkedListIterator(self)
+                

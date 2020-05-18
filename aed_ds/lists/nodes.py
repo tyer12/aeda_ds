@@ -13,8 +13,8 @@ class SingleListNode:
         self.element = element
     
     def set_next(self, next_node):
-        self.next = next_node
-    
+        self.next_node = next_node
+
     def has_next(self):
         if self.next_node != None:
             return True
@@ -22,7 +22,7 @@ class SingleListNode:
 
 class DoubleListNode(SingleListNode):
     def __init__(self, element, next_node, previous_node):
-        SingleListNode.__init__(element, next_node)
+        SingleListNode.__init__(self, element, next_node)
         self.previous_node = previous_node
     
     def get_previous(self):
