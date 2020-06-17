@@ -26,7 +26,11 @@ class DoublyLinkedList(SinglyLinkedList):
             self.num_elements += 1
 
     def insert(self, element, position):
+<<<<<<< HEAD
         if position < 0 or position > self.size():
+=======
+        if position > self.num_elements or position < 0:
+>>>>>>> upstream/develop
             raise InvalidPositionException()
         else: 
             if position == 0:
@@ -50,6 +54,7 @@ class DoublyLinkedList(SinglyLinkedList):
 
     def remove_first(self):
         if self.num_elements == 1:
+<<<<<<< HEAD
             self.head = None
             self.tail = None
             self.num_elements = 0
@@ -57,11 +62,23 @@ class DoublyLinkedList(SinglyLinkedList):
         elif self.num_elements == 0:
             raise EmptyListException()
         else:
+=======
+            old_head = self.head
+            self.head = None
+            self.tail = None
+            self.num_elements = 0
+            return old_head.get_element()
+        elif self.num_elements == 0:
+            raise EmptyListException()
+        else:
+            old_head = self.head
+>>>>>>> upstream/develop
             temp = self.head
             temp = self.head.get_next()
             self.head = temp
             self.head.set_previous(None)
             self.num_elements -= 1
+<<<<<<< HEAD
             return temp.get_element()
 
     def remove_last(self):
@@ -73,10 +90,26 @@ class DoublyLinkedList(SinglyLinkedList):
         elif self.num_elements == 0:
             raise EmptyListException()
         else:
+=======
+            return old_head.get_element()
+
+    def remove_last(self):
+        if self.num_elements == 1:
+            old_tail = self.tail
+            self.head = None
+            self.tail = None
+            self.num_elements = 0
+            return old_tail.get_element()
+        elif self.num_elements == 0:
+            raise EmptyListException()
+        else:
+            old_tail = self.tail
+>>>>>>> upstream/develop
             var = self.tail.get_previous()
             self.tail = var
             self.tail.set_next(None)
             self.num_elements -= 1
+<<<<<<< HEAD
             return self.tail.get_element()
 
     def remove(self, position):
@@ -87,17 +120,37 @@ class DoublyLinkedList(SinglyLinkedList):
                 self.remove_first()
             elif position == self.size()-1:
                 self.remove_last()
+=======
+            return old_tail.get_element()
+
+    def remove(self, position):
+        if position < 0 or position > (self.size() - 1) :
+            raise InvalidPositionException()
+        else:
+            if position == 0:
+                return self.remove_first()
+            elif position == (self.size()-1):
+                return self.remove_last()
+>>>>>>> upstream/develop
             else:
                 current = self.head
                 index = 0
                 while True:
                     if index == position:
+<<<<<<< HEAD
+=======
+                        old_node = current
+>>>>>>> upstream/develop
                         temp = current.get_next()
                         temp_previous = current.get_previous()
                         temp.set_previous(temp_previous)
                         temp_previous.set_next(temp)
                         self.num_elements -= 1
+<<<<<<< HEAD
                         return temp.get_element()
+=======
+                        return old_node.get_element()
+>>>>>>> upstream/develop
 
                     current = current.get_next()
                     index += 1

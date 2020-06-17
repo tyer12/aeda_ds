@@ -2,4 +2,11 @@
 *pyc
 htmlcov/
 .coverage
+<<<<<<< HEAD
 program.py
+=======
+program.py
+dist/
+build/
+*.egg-info/
+>>>>>>> upstream/develop
