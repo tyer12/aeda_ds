@@ -150,3 +150,6 @@ class TestBinarySearchTree(unittest.TestCase):
         self.assertFalse(self.tree.is_empty())
         self.remove_items(3)
         self.assertTrue(self.tree.is_empty())
+
+if __name__ == "__main__":
+    unittest.main()
